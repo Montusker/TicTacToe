@@ -1,24 +1,39 @@
+const board = document.getElementById("board");
+
 const gameBoard = (() => {
     'use strict';
-    let _gameBoard = ["X", "X", "X", "X", "X", "X", "X", "X", "X"];
+    let tttBoard = ["X", "O", "X", "O", "X", "X", "O", "X", "X"];
 
     const resetBoard = () => {
-        _gameBoard = ["", "", "", "", "", "", "", "", ""]
+        gameBoard = ["", "", "", "", "", "", "", "", ""]
     }
 
     return {
-        _gameBoard,
-        resetBoard,
+        tttBoard: tttBoard,
+        resetBoard: resetBoard,
 
     };
-});
+})();
+
+
+
 
 const displayController = (() => {
     'use strict';
 
+    const displayBoard = () => {
+        const gamePieces = Array.from(document.querySelectorAll('.gamepiece'));
+        gamePieces.forEach((piece, index) => {
+            piece.innerHTML = gameBoard.tttBoard[index];
+        })
 
-    return {};
-});
+
+    };
+
+
+
+    return { displayBoard };
+})();
 
 const playerFactory = (name, xo, turn) => {
     const sayHello = () => console.log('hello!');
