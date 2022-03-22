@@ -1,16 +1,63 @@
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    margin-bottom: 0;
+}
+
+.scoreboard {
+    display: flex;
+    justify-content: space-around;
+    background-color: dodgerblue;
+    text-align: center;
+    width: 400px;
+    margin: 20px;
+    border: 1px solid blue;
+    border-radius: 15px;
+    color: whitesmoke;
+}
+
 #board {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     width: 500px;
     height: 500px;
+    margin: 30px;
 }
 
 .gamepiece {
-    background-color: tan;
+    /* background-color: tan; */
     border: 1px solid black;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 8rem;
+}
+
+#piece-1,
+#piece-2,
+#piece-3 {
+    border-top: none;
+}
+
+#piece-1,
+#piece-4,
+#piece-7 {
+    border-left: none;
+}
+
+#piece-3,
+#piece-6,
+#piece-9 {
+    border-right: none;
+}
+
+#piece-7,
+#piece-8,
+#piece-9 {
+    border-bottom: none;
 }

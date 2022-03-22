@@ -1,9 +1,11 @@
 const board = document.getElementById("board");
 const gamePieces = Array.from(document.querySelectorAll('.gamepiece'));
 const winnerDisplay = document.getElementById("winner");
+const player1Score = document.getElementById("player1Score");
+const player2Score = document.getElementById("player2Score");
 
 
-const playerFactory = (name, xo, turn) => {
+const playerFactory = (name, xo, turn, score) => {
 
     const symbol = () => {
         if (xo == true) {
@@ -20,11 +22,11 @@ const playerFactory = (name, xo, turn) => {
 
 
 
-    return { name, xo, turn, symbol };
+    return { name, xo, turn, score, symbol };
 };
 
-const player1 = playerFactory("Player 1", true, true);
-const player2 = playerFactory("Player 2", false, false);
+const player1 = playerFactory("Player 1", true, true, 0);
+const player2 = playerFactory("Player 2", false, false, 0);
 
 const gameBoard = (() => {
     'use strict';
@@ -149,6 +151,8 @@ const gameBoard = (() => {
 const displayController = (() => {
     'use strict';
 
+
+
     const displayBoard = () => {
         gamePieces.forEach((piece, index) => {
             piece.innerHTML = gameBoard.tttBoard[index];
@@ -159,8 +163,14 @@ const displayController = (() => {
     const declareWinner = () => {
         if (player1.turn) {
             winnerDisplay.innerHTML = player1.name + " won! Congratulations!";
+            player1.score++;
+            player1Score.innerHTML = player1.score;
+
         } else {
             winnerDisplay.innerHTML = player2.name + " won! Congratulations!";
+            player2.score++;
+            player2Score.innerHTML = player2.score;
+
 
         }
     }
