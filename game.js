@@ -19,37 +19,30 @@ const playerFactory = (name, xo, turn, score) => {
     let playerName = name;
     let playerXO = xo;
     let playerTurn = turn;
-    let playerScore = score;
 
     const getName = () => playerName;
-    const getXO = () => playerXO;
-    const getTurn = () => playerTurn;
-    const getScore = () => playerScore;
-
-    const symbol = () => {
-        if (xo == true) {
+    const getXO = () => {
+        if (playerXO) {
             return "X";
         } else {
             return "O";
         }
-    }; // could upload your own emblems?
-
+    };
+    const getTurn = () => playerTurn;
     const setName = (newName) => {
         playerName = newName;
     }
-
     const takeTurn = () => {
-        if (playerTurn) {
+        if (getTurn()) {
             playerTurn = false;
         } else {
             playerTurn = true;
         }
     };
-
-
-
-
-    return { getName, xo, turn, score, symbol, takeTurn, getTurn, setName };
+    const setTurn = (isTurn) => {
+        playerTurn = isTurn;
+    };
+    return { getName, score, setTurn, takeTurn, getXO, setName, getTurn };
 };
 
 const player1 = playerFactory("Player 1", true, true, 0);
@@ -60,13 +53,10 @@ const gameBoard = (() => {
     let tttBoard = ["", "", "", "", "", "", "", "", ""];
 
     const resetBoard = () => {
-
         gameBoard.tttBoard = ["", "", "", "", "", "", "", "", ""];
-
-        player1.turn = true;
-        player2.turn = false;
+        player1.setTurn(true);
+        player2.setTurn(false);
         displayController.displayBoard();
-
     }
 
 
@@ -132,30 +122,19 @@ const gameBoard = (() => {
             if (_checkGameOver() || gameBoard.tttBoard[index]) {
                 return 0;
             }
-
-            if (player1.turn) {
-                gameBoard.tttBoard[index] = "X";
-                displayController.displayBoard();
-                if (_checkGameOver()) {
-                    displayController.declareWinner();
-
-                }
-                player1.turn = false;
-                player2.turn = true;
-
-
+            if (player1.getTurn()) {
+                gameBoard.tttBoard[index] = player1.getXO();
             } else {
-                gameBoard.tttBoard[index] = "O";
-                displayController.displayBoard();
-
-                if (_checkGameOver()) {
-                    displayController.declareWinner();
-
-                }
-                player1.turn = true;
-                player2.turn = false;
-
+                gameBoard.tttBoard[index] = player2.getXO();
             }
+            displayController.displayBoard();
+            if (_checkGameOver()) {
+                displayController.declareWinner();
+            } else {
+                player1.takeTurn();
+                player2.takeTurn();
+            }
+
         }));
 
 
@@ -171,9 +150,6 @@ const gameBoard = (() => {
 
 const displayController = (() => {
     'use strict';
-
-
-
     const displayBoard = () => {
         gamePieces.forEach((piece, index) => {
             piece.innerHTML = gameBoard.tttBoard[index];
@@ -182,7 +158,7 @@ const displayController = (() => {
 
     };
     const declareWinner = () => {
-        if (player1.turn) {
+        if (player1.getTurn()) {
             winnerDisplay.innerHTML = player1.getName() + " won! Congratulations!";
             player1.score++;
             player1Score.innerHTML = player1.score;
@@ -191,11 +167,8 @@ const displayController = (() => {
             winnerDisplay.innerHTML = player2.getName() + " won! Congratulations!";
             player2.score++;
             player2Score.innerHTML = player2.score;
-
-
         }
     }
-
 
     return { displayBoard, declareWinner };
 })();
@@ -203,17 +176,15 @@ const displayController = (() => {
 
 resetButton.addEventListener('click', () => {
     gameBoard.resetBoard();
-    winnerDisplay.innerHTML = "";
+    winnerDisplay.innerHTML = "Tic-Tac-Toe";
 });
 
 formExpand.addEventListener('click', () => {
-
     if (formHolder.style.display === "none") {
         formHolder.style.display = "block";
     } else {
         formHolder.style.display = "none";
     }
-
 });
 
 formSubmit.addEventListener('click', (event) => {
