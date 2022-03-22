@@ -16,17 +16,41 @@
         <div class="scoreboard">
 
             <div>
-                <h2 class="players" id="player1" contentEditable="true">Player 1</h2>
+                <h2 class="players" id="player1">Player 1</h2>
                 <p id="player1Score">0</p>
             </div>
 
             <div>
-                <h2 class="players" id="player2" contentEditable="true">Player 2</h2>
+                <h2 class="players" id="player2">Player 2</h2>
                 <p id="player2Score">0</p>
             </div>
 
 
+            <button id="expand-form">&#8691</button>
+
+            <div id="form-holder">
+                <form>
+
+                    <formsection>
+                        <input type="text" id="player1Name" value="Player 1">
+                    </formsection>
+
+                    <formsection>
+                        <input type="text" id="player2Name" value="Player 2">
+                    </formsection>
+
+                    <button id="name-changer">Change Names</button>
+
+                    <button id="score-resetter">Reset Scores</button>
+
+                </form>
+            </div>
+
+
         </div>
+        <h2 id="winner"></h2>
+        <button id="reset">Start/Reset</button>
+
         <div id="board">
             <div class="gamepiece" id="piece-1"></div>
             <div class="gamepiece" id="piece-2"></div>
@@ -38,10 +62,7 @@
             <div class="gamepiece" id="piece-8"></div>
             <div class="gamepiece" id="piece-9"></div>
         </div>
-        <button id="reset">Start/Reset</button>
 
-        <h2 id="winner">
-            </h1>
     </main>
 
 </body>
